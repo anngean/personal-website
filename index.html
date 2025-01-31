@@ -9,8 +9,8 @@
             font-family: Consolas, monospace;
             margin: 0;
             padding: 0;
-            background-color: #0a0a0a; /* Dark grey background */
-            color: #ddd; /* Light grey text */
+            background-color: #0a0a0a; /* Dark gray background */
+            color: #ddd; /* Light gray text */
             text-align: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
@@ -18,7 +18,7 @@
         }
         header {
             background-color: #0a0a0a; /*Dark header */
-            color: #ddd; /*Light grey text */
+            color: #ddd; /*Light gray text */
             padding: 20px;
             font-size: 24px;
             transform: translateY(-20px);
@@ -34,24 +34,31 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden; /* Ensures no elements outside */
-           text-align: left;
+            text-align: left;
        }
         h2, p {
             position: relative; /* For absolute positioning */
-            opacity: 0; /* Initially transparent */
+           opacity: 0.5; /* Initially semi-transparent */
             transform: translateY(50px); /* Initial slight vertical offset */
-            transition: opacity 1s ease-out, transform 1s ease-out;
+             transition: opacity 1s ease-out, transform 1s ease-out, color 0.3s ease; /* Added color transition */
+           cursor: pointer; /* Make cursor a pointer on titles */
         }
-       h2{
+        h2:hover{
+             transform: translateY(45px) scale(1.05) ; /* Apply slightly smaller scale and move up*/
+             color: #999; /* Lighter gray color on hover */
+         }
+        h2{
             margin-bottom: 10px;
             font-weight: bold;
             font-size: 22px;
-        }
+             position: relative;
+         }
         p{
             line-height: 1.4;
+           
         }
 
-      .particle-container {
+        .particle-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -70,14 +77,12 @@
              border-radius: 50%;
             transform: scale(0.8);
         }
-
     </style>
 </head>
 <body>
     <header>
-         [Your Name]
+        [Your Name]
     </header>
-   
     <div class="particle-container"></div>
     <div class="container">
         <h2 class="text-element">About Me</h2>
@@ -98,12 +103,13 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+          document.addEventListener("DOMContentLoaded", function() {
              document.body.style.opacity = "1";
             document.querySelector("header").style.opacity = "1";
             document.querySelector("header").style.transform = "translateY(0)";
              createParticles();
-        });
+         });
+
         window.addEventListener("scroll", function() {
              const textElements = document.querySelectorAll(".text-element");
             textElements.forEach((text, index) => {
@@ -126,8 +132,7 @@
             );
          }
 
-
-        function createParticles(){
+       function createParticles(){
                 const particleContainer = document.querySelector('.particle-container');
                 const numParticles = 200; // Adjust this for more or fewer particles
               const particles = []; // Hold all of our particles
@@ -165,25 +170,24 @@
                    requestAnimationFrame(animateParticles);
             }
 
-        function applyMouseEffect(event) {
-           particles.forEach(particle => {
+          function applyMouseEffect(event) {
+               particles.forEach(particle => {
                  const mouseX = event.clientX;
                  const mouseY = event.clientY;
                  const dx = mouseX - particle.x;
-                 const dy = mouseY - particle.y;
+                const dy = mouseY - particle.y;
                  const distance = Math.sqrt(dx * dx + dy * dy);
                  const force = Math.max(0, 50 - distance);
                  if (force > 0) {
-                    const angle = Math.atan2(dy, dx);
-                     particle.vx += Math.cos(angle) * 0.01 * force;
+                     const angle = Math.atan2(dy, dx);
+                    particle.vx += Math.cos(angle) * 0.01 * force;
                      particle.vy += Math.sin(angle) * 0.01 * force;
                 }
-            })
+           })
         }
 
         window.addEventListener('mousemove', applyMouseEffect)
-            animateParticles()
-      }
+        animateParticles()
     </script>
 </body>
 </html>

@@ -9,59 +9,66 @@
             font-family: Consolas, monospace;
             margin: 0;
             padding: 0;
-            background-color: #000;
-            color: #fff; /* White text for contrast */
+            background-color: #f0f0f0; /* Off-white background */
+            color: #333; /* Dark gray text for better contrast */
             text-align: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
+            overflow-x: hidden; /* Hide horizontal overflow */
         }
-        header {
-            background-color: #000; /* Black header */
-            color: #fff; /* White text */
+         header {
+            background-color: #f0f0f0; /* Off-white header */
+            color: #333; /* Dark gray text */
             padding: 20px;
             font-size: 24px;
             transform: translateY(-20px);
             opacity: 0;
             transition: transform 1s ease-out, opacity 1s ease-out;
         }
-        .container {
+       .container {
             max-width: 800px;
             margin: 20px auto;
             background: transparent; /* Transparent container */
             padding: 20px;
             border-radius: 8px;
             position: relative;
-             overflow: hidden; /* Ensures no elements outside */
-             text-align: left;
+            overflow: hidden; /* Ensures no elements outside */
+            text-align: left;
         }
-        h2, p {
+       h2, p {
             position: relative; /* For absolute positioning */
             opacity: 0.2; /* Initially transparent */
             transform: translateY(100px) translateX(50px); /* Initial random position */
             transition: opacity 1s ease-out, transform 1s ease-out;
-            color: #fff;
+            color: #333;
         }
        h2{
             margin-bottom: 10px;
             font-weight: bold;
             font-size: 22px;
         }
-       p{
-           line-height: 1.4;
-       }
-        
-        .contact {
-            margin-top: 20px;
+        p{
+            line-height: 1.4;
         }
-         /* Cursor interaction effect */
-        .interactive {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+
+      .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            transition: transform 0.2s ease-out;
+            overflow: hidden;
+            z-index: -1; /* Behind all content */
+          
+         }
+
+      .matrix-char {
+            position: absolute;
+            white-space: nowrap;
+            color: #0f0; /* Matrix green */
+            opacity: 0.8;
+            font-size: 14px; /* Reduced font size */
         }
     </style>
 </head>
@@ -69,7 +76,7 @@
     <header>
         [Your Name]
     </header>
-    
+      <div class="matrix-rain"></div>
     <div class="container">
         <h2 class="matrix-text">About Me</h2>
         <p class="matrix-text">Detail-oriented professional with experience in content evaluation, quality assurance, and compliance monitoring.</p>
@@ -85,45 +92,82 @@
         <p class="matrix-text">Certifications: </p>
         
         <h2 class="matrix-text">Contact</h2>
-         <p class="matrix-text">Email: [Your Email] | LinkedIn: [Your LinkedIn Profile]</p>
+        <p class="matrix-text">Email: [Your Email] | LinkedIn: [Your LinkedIn Profile]</p>
     </div>
 
-    <div class="interactive"></div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-             document.body.style.opacity = "1";
-             document.querySelector("header").style.opacity = "1";
-             document.querySelector("header").style.transform = "translateY(0)";
-         });
-
-           // Cursor interaction effect
-        document.addEventListener("mousemove", function(event) {
-            const cursorEffect = document.querySelector(".interactive");
-            cursorEffect.style.transform = `translate(${event.clientX - 50}px, ${event.clientY - 50}px)`;
+         document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.opacity = "1";
+            document.querySelector("header").style.opacity = "1";
+            document.querySelector("header").style.transform = "translateY(0)";
+            createMatrixRain();
          });
 
         window.addEventListener("scroll", function() {
-             const matrixTexts = document.querySelectorAll(".matrix-text");
-             matrixTexts.forEach((text, index) => {
-                  if (isElementInViewport(text)) {
-                       setTimeout(() => {
-                           text.style.opacity = 1;
-                           text.style.transform = 'translateY(0px) translateX(0px)';
-                        }, 100 * index);
-                    }
-             });
-         });
+            const matrixTexts = document.querySelectorAll(".matrix-text");
+            matrixTexts.forEach((text, index) => {
+                if (isElementInViewport(text)) {
+                    setTimeout(() => {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0px) translateX(0px)';
+                    }, 100 * index);
+                }
+            });
+        });
 
-
-         function isElementInViewport(el) {
-             const rect = el.getBoundingClientRect();
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
             return (
-                 rect.top >= 0 &&
-                 rect.left >= 0 &&
+                rect.top >= 0 &&
+                rect.left >= 0 &&
                 rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-                );
+            );
+        }
+
+
+        function createMatrixRain() {
+              const matrixRainContainer = document.querySelector(".matrix-rain");
+              const numChars = window.innerWidth / 10; // Adjust this for char density
+              const fallingSpeed = 50; //Adjust falling speed
+               
+            for(let i=0; i<numChars; i++){
+                 const charElement = document.createElement('div');
+                 charElement.className = 'matrix-char';
+                 charElement.textContent = getRandomChar();
+                 charElement.style.left = `${Math.random() * window.innerWidth}px`;
+                 charElement.style.top = `${-Math.random() * window.innerHeight}px` // Start off-screen
+                 matrixRainContainer.appendChild(charElement);
+
+                 animateMatrixChar(charElement, fallingSpeed)
+            }
+
+
+          function animateMatrixChar(charElement, speed){
+            let startY = parseFloat(charElement.style.top)
+            let destY = window.innerHeight;
+
+            function animate(){
+                startY += speed;
+                charElement.style.top = `${startY}px`
+              
+                 if(startY > destY){
+                     startY = -Math.random() * window.innerHeight //reset position
+                     charElement.style.top = `${startY}px`
+                     charElement.textContent = getRandomChar();
+                 }
+               
+                 requestAnimationFrame(animate);
+            }
+            animate();
+
+         }
+
+
+            function getRandomChar(){
+                 const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+=-`~[]\{}|;':\",./<>?";
+                 return chars[Math.floor(Math.random() * chars.length)];
+              }
         }
     </script>
 </body>

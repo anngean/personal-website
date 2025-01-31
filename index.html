@@ -6,20 +6,18 @@
     <title>[Your Name] - Portfolio</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Consolas, monospace;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #000;
+            color: #fff; /* White text for contrast */
             text-align: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
-            background-image: url('your-background-image.jpg'); /* Replace with your image */
-            background-size: cover;
-            background-attachment: fixed;
         }
         header {
-            background-color: #333;
-            color: white;
+            background-color: #000; /* Black header */
+            color: #fff; /* White text */
             padding: 20px;
             font-size: 24px;
             transform: translateY(-20px);
@@ -29,126 +27,104 @@
         .container {
             max-width: 800px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.8); /* Make container slightly transparent */
+            background: transparent; /* Transparent container */
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
             position: relative;
+             overflow: hidden; /* Ensures no elements outside */
+             text-align: left;
         }
-        h2 {
-            color: #333;
-            position: relative; /* For layered parallax */
+        h2, p {
+            position: relative; /* For absolute positioning */
+            opacity: 0.2; /* Initially transparent */
+            transform: translateY(100px) translateX(50px); /* Initial random position */
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            color: #fff;
         }
-        p {
-            line-height: 1.6;
-            position: relative; /* For layered parallax */
+       h2{
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 22px;
         }
+       p{
+           line-height: 1.4;
+       }
+        
         .contact {
             margin-top: 20px;
         }
-        .container:hover {
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        /* Cursor interaction effect */
+         /* Cursor interaction effect */
         .interactive {
             position: absolute;
             width: 100px;
             height: 100px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             pointer-events: none;
             transition: transform 0.2s ease-out;
         }
-        
-        /* Parallax effect */
-        .parallax-bg {
-            background-image: inherit; /* Inherit background for overlay */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Behind all content */
-            transform: translateZ(0); /* Force hardware acceleration */
-            background-size: cover;
-            background-position: center; /* Center image */
-            pointer-events: none;
-            transition: transform 0.5s ease-out;
-        }
     </style>
 </head>
 <body>
-    <div class="parallax-bg"></div> <!-- Parallax Background -->
     <header>
         [Your Name]
     </header>
     
     <div class="container">
-        <h2 class="fade-in parallax-layer" data-speed="0.05">About Me</h2>
-        <p class="fade-in parallax-layer" data-speed="0.1">Detail-oriented professional with experience in content evaluation, quality assurance, and compliance monitoring.</p>
+        <h2 class="matrix-text">About Me</h2>
+        <p class="matrix-text">Detail-oriented professional with experience in content evaluation, quality assurance, and compliance monitoring.</p>
         
-        <h2 class="fade-in parallax-layer" data-speed="0.08">Work Experience</h2>
-        <p class="fade-in parallax-layer" data-speed="0.12"><strong>Moderator</strong><br>
+        <h2 class="matrix-text">Work Experience</h2>
+        <p class="matrix-text"><strong>Moderator</strong><br>
         Reviewed and evaluated user-generated content on web and social media platforms to ensure compliance with community guidelines.</p>
-        <p class="fade-in parallax-layer" data-speed="0.14"><strong>Support Specialist</strong><br>
+        <p class="matrix-text"><strong>Support Specialist</strong><br>
         Assisted in pricing, quotations, and bid management, working closely with project managers and sales teams.</p>
         
-        <h2 class="fade-in parallax-layer" data-speed="0.07">Skills & Certifications</h2>
-        <p class="fade-in parallax-layer" data-speed="0.13">Content Moderation | Quality Assurance | Policy Compliance</p>
-        <p class="fade-in parallax-layer" data-speed="0.11">Certifications: </p>
+        <h2 class="matrix-text">Skills & Certifications</h2>
+        <p class="matrix-text">Content Moderation | Quality Assurance | Policy Compliance</p>
+        <p class="matrix-text">Certifications: </p>
         
-        <h2 class="fade-in parallax-layer" data-speed="0.09">Contact</h2>
-        <p class="fade-in parallax-layer" data-speed="0.15">Email: [Your Email] | LinkedIn: [Your LinkedIn Profile]</p>
+        <h2 class="matrix-text">Contact</h2>
+         <p class="matrix-text">Email: [Your Email] | LinkedIn: [Your LinkedIn Profile]</p>
     </div>
 
     <div class="interactive"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.body.style.opacity = "1";
-            document.querySelector("header").style.opacity = "1";
-            document.querySelector("header").style.transform = "translateY(0)";
-            document.querySelector(".container").style.opacity = "1";
-            document.querySelector(".container").style.transform = "translateY(0)";
-            
-            const fadeIns = document.querySelectorAll(".fade-in");
-            fadeIns.forEach((element, index) => {
-                setTimeout(() => {
-                    element.style.opacity = "1";
-                    element.style.transform = "translateY(0)";
-                }, 500 * (index + 1));
-            });
-        });
+             document.body.style.opacity = "1";
+             document.querySelector("header").style.opacity = "1";
+             document.querySelector("header").style.transform = "translateY(0)";
+         });
 
-        // Cursor interaction effect
+           // Cursor interaction effect
         document.addEventListener("mousemove", function(event) {
             const cursorEffect = document.querySelector(".interactive");
             cursorEffect.style.transform = `translate(${event.clientX - 50}px, ${event.clientY - 50}px)`;
-        });
+         });
 
-        // Parallax effect on scroll
         window.addEventListener("scroll", function() {
-            let scrollPosition = window.scrollY;
-           
-            // Background parallax
-            document.querySelector(".parallax-bg").style.transform = `translateY(${scrollPosition * 0.1}px) scale(1.05)`;
+             const matrixTexts = document.querySelectorAll(".matrix-text");
+             matrixTexts.forEach((text, index) => {
+                  if (isElementInViewport(text)) {
+                       setTimeout(() => {
+                           text.style.opacity = 1;
+                           text.style.transform = 'translateY(0px) translateX(0px)';
+                        }, 100 * index);
+                    }
+             });
+         });
 
-            const parallaxLayers = document.querySelectorAll(".parallax-layer");
-            parallaxLayers.forEach(layer => {
-              let speed = layer.dataset.speed;
-              layer.style.transform = `translateY(${scrollPosition * speed}px) rotate(${scrollPosition * 0.01}deg)`;
-            });
-        });
+
+         function isElementInViewport(el) {
+             const rect = el.getBoundingClientRect();
+            return (
+                 rect.top >= 0 &&
+                 rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+        }
     </script>
 </body>
 </html>
